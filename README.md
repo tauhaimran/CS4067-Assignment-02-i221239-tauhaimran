@@ -64,7 +64,17 @@
 The application has been verified to work correctly using Docker Compose. All microservices communicate as expected in the Docker environment.
 
 ## Screenshots
+_Docker Compose Running_
+![Docker Compose Running](docs/dc1.jpg)
+![Docker Compose Running](docs/dc2.jpg)
+![Docker Compose Running](docs/dc3.jpg)
+![Docker Compose Running](docs/dc4.jpg)
+![Docker Compose Running](docs/dc4.jpg)
 
-![Docker Compose Running](screenshots/docker-compose.png)
-![Kubernetes Errors](screenshots/k8s-errors.png)
-![Working Frontend](screenshots/frontend.png)
+_Kubernetes Errors_
+![Kubernetes Errors](docs/kubeadm_error.jpg)
+![Kubernetes Errors](docs/kubeadm_error1.jpg)
+![Kubernetes Errors](docs/kubeadm_error2.jpg)
+
+_working frontend_
+![Working Frontend](docs/frontend.jpg)
