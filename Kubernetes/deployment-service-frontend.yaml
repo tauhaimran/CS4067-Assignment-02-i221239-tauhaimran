@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-service
+  namespace: event-booking-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-service
+  template:
+    metadata:
+      labels:
+        app: frontend-service
+    spec:
+      containers:
+      - name: frontend-service
+        image: tauhaimran/frontend-service:latest  # Replace with your image
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_BOOKING_SERVICE_URL
+          value: "http://booking-service:5001"
+        - name: REACT_APP_USER_SERVICE_URL
+          value: "http://user-service:5004"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: event-booking-system
+spec:
+  type: NodePort  # For external access
+  selector:
+    app: frontend-service
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000  # Optional: Fixed port (30000-32767)
