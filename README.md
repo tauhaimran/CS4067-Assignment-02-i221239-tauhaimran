@@ -1,8 +1,41 @@
 # CS4067-Assignment-02-i221239-tauhaimran
+ ## Containerization & Deployment
+ 
+ **Name:** Tauha Imran  
+**Roll Number:** i221239  
+ 
  DevOps A2 - containerizing A1 with Docker and Kubernetes
+ Online Event Booking Platform
 
+---
 
-## Setup Instructions
+## Project Structure
+
+```
+/CS4067-EventBooking
+├── /user-service-codebase
+│ └── Dockerfile
+├── /event-service-codebase
+│ └── Dockerfile
+├── /booking-service-codebase
+│ └── Dockerfile
+├── /notification-service-codebase
+│ └── Dockerfile
+├── /frontend-service-codebase
+│ └── Dockerfile
+└── /kubernetes
+├── namespace.yaml
+├── configmap.yaml
+├── secrets.yaml
+├── deployment-service-user.yaml
+├── deployment-service-event.yaml
+├── deployment-service-booking.yaml
+├── deployment-service-notification.yaml
+├── deployment-service-frontend.yaml
+├── ingress.yaml
+└── docker-compose.yml
+```
+---
 
 ### Docker Compose (Working Implementation)
 1. Clone the repository
