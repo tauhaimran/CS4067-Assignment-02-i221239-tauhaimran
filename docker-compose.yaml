@@ -1,0 +1,120 @@
+version: 
+services:
+  postgresdb:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: app_db
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - postgres-data:/data/db
+
+  mongodb:
+    container_name: mongodb_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes:
+      - mongo-data:/data/db
+
+  rabbitmq:
+    container_name: rabbitmq_container
+    image: rabbitmq:3-management-alpine
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - app-network
+
+  bookingservice:
+    container_name: booking-service
+    build: 
+      context: ./booking-service
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5001:5001"
+    depends_on:
+      - postgresdb
+      - rabbitmq
+    networks:
+      - app-network
+
+  eventservice:
+    container_name: event-service
+    build: 
+      context: ./event-service
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  notificationservice:
+    container_name: notification-service
+    build: 
+      context: ./notification-service
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - app-network
+
+  userservice:
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5004:5004"
+    depends_on:
+      - postgresdb
+    networks:
+      - app-network
+
+  uiservice:
+    container_name: frontend_container
+    build:
+      context: ./frontend-service
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - userservice
+      - bookingservice
+      - eventservice
+      - notificationservice
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data: 
+    driver: local
+  postgres-data:
+    driver: local
