@@ -18,6 +18,13 @@ spec:
         image: tauhaimran/event-service:latest  # Replace with your image
         ports:
         - containerPort: 5002
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         envFrom:
         - configMapRef:
             name: app-config

@@ -24,6 +24,13 @@ spec:
           value: "guest"
         - name: RABBITMQ_DEFAULT_PASS
           value: "guest"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         volumeMounts:
         - name: rabbitmq-data
           mountPath: /var/lib/rabbitmq
